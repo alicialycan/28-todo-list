@@ -1,27 +1,25 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import NoteItem from './NoteItem.jsx';
 
 class NoteList extends React.Component {
   constructor(props) {
     super(props);
+
+    this.compileList = this.compileList.bind(this);
   }
 
-  list() {
-    return this.props.notes.map((note, key) => {
-     return <Noteitem content={notes.content} title={notes.title} key={key} />;
+  compileList() {
+    return this.props.notes.map((note, index) => {
+      return <NoteItem removeNote={this.props.removeNote}
+        note={note} key={note.id} index={index} />
     })
   }
 
   render() {
     return <div>
-      NoteList
-      <div>
-        <NoteItem />
-      </div>
       <ul>
-        {this.list()}
+        {this.compileList()}
       </ul>
     </div>
   }

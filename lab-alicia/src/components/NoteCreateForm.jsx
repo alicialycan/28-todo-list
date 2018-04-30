@@ -1,25 +1,51 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import uuidv4 from 'uuid/v4';
 
 class NoteCreateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: '',
-      content: ''
+      content: '',
+      id: '',
+      editing: false,
+      completed: false,
     }
 
-    this.onComplete = this.onComplete.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onComplete(ev) {
-    this.setState({title: this.state.title, content: this.state.content})
+  handleChange(ev) {
+    this.setState({
+      [ev.target.name]: ev.target.value,
+      id: uuidv4()
+    })
+  }
+
+  handleSubmit(ev) {
+    ev.preventDefault();
+    this.props.addNote(this.state);
   }
 
   render() {
-    return <div>
-      NoteCreateForm
-    </div>;
+    return <form
+      onSubmit={this.handleSubmit}>
+      <input
+        type='text'
+        name='title'
+        placeholder='Title'
+        onChange={this.handleChange}
+      />
+      <input
+        type='text'
+        name='content'
+        placeholder='Content'
+        onChange={this.handleChange}
+      />
+      <button type='submit'
+        value='Add Note'>Create Note</button>
+    </form>
   }
 }
 
